@@ -1,0 +1,22 @@
+name: Lint Exercises
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Install OCLint
+        run: brew install oclint
+
+      - name: Run OCLint
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project xcodeProject/ObjectiveC.xcodeproj \
+            -target OCLint \
+            | xcpretty
